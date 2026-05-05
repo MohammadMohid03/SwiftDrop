@@ -1,0 +1,90 @@
+<Window x:Class="SwiftDrop.Views.QuickLookWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Quick Look"
+        Width="500" Height="450"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        Topmost="True"
+        ShowInTaskbar="False"
+        ResizeMode="NoResize"
+        WindowStartupLocation="CenterScreen"
+        KeyDown="Window_KeyDown"
+        MouseLeftButtonDown="Window_MouseDown"
+        Deactivated="Window_Deactivated">
+
+    <Border CornerRadius="16" BorderThickness="1" Margin="10"
+            ClipToBounds="True">
+        <Border.Background>
+            <SolidColorBrush Color="#F01A1A2E"/>
+        </Border.Background>
+        <Border.BorderBrush>
+            <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <GradientStop Color="#50FFFFFF" Offset="0"/>
+                <GradientStop Color="#18FFFFFF" Offset="1"/>
+            </LinearGradientBrush>
+        </Border.BorderBrush>
+        <Border.Effect>
+            <DropShadowEffect Color="Black" BlurRadius="24" ShadowDepth="6" Opacity="0.5"/>
+        </Border.Effect>
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="32"/>  <!-- Title -->
+                <RowDefinition Height="*"/>   <!-- Content -->
+                <RowDefinition Height="30"/>  <!-- Footer -->
+            </Grid.RowDefinitions>
+
+            <!-- Title bar -->
+            <Grid Grid.Row="0" Background="#10FFFFFF">
+                <TextBlock x:Name="TitleText" FontSize="11" FontWeight="SemiBold"
+                           Foreground="{StaticResource TextSecondaryBrush}"
+                           VerticalAlignment="Center" Margin="14,0"
+                           TextTrimming="CharacterEllipsis"/>
+            </Grid>
+
+            <!-- Content area -->
+            <Grid Grid.Row="1" Margin="0">
+                <!-- Image preview -->
+                <Image x:Name="ImagePreview" Stretch="Uniform"
+                       Margin="8" Visibility="Collapsed"/>
+
+                <!-- Text preview -->
+                <ScrollViewer x:Name="TextPreview"
+                              VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Auto"
+                              Margin="8" Visibility="Collapsed">
+                    <TextBlock x:Name="TextContent"
+                               FontFamily="Cascadia Code, Consolas, monospace"
+                               FontSize="11" Foreground="{StaticResource TextPrimaryBrush}"
+                               TextWrapping="Wrap"/>
+                </ScrollViewer>
+
+                <!-- Unsupported file info -->
+                <StackPanel x:Name="FileInfoPanel"
+                            VerticalAlignment="Center" HorizontalAlignment="Center"
+                            Visibility="Collapsed">
+                    <TextBlock x:Name="FileIcon"
+                               FontFamily="Segoe MDL2 Assets" FontSize="48"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               HorizontalAlignment="Center" Margin="0,0,0,12"/>
+                    <TextBlock x:Name="FileNameText" FontSize="14" FontWeight="SemiBold"
+                               Foreground="{StaticResource TextPrimaryBrush}"
+                               HorizontalAlignment="Center" Margin="0,0,0,4"/>
+                    <TextBlock x:Name="FileSizeText" FontSize="11"
+                               Foreground="{StaticResource TextMutedBrush}"
+                               HorizontalAlignment="Center"/>
+                </StackPanel>
+            </Grid>
+
+            <!-- Footer -->
+            <Border Grid.Row="2" Background="#10FFFFFF">
+                <TextBlock Text="Press Space or click to close" FontSize="9"
+                           Foreground="{StaticResource TextMutedBrush}"
+                           VerticalAlignment="Center" HorizontalAlignment="Center"
+                           Opacity="0.6"/>
+            </Border>
+        </Grid>
+    </Border>
+</Window>

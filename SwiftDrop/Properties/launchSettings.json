@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "SwiftDrop (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "SwiftDrop (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
