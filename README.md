@@ -1,12 +1,5 @@
-<<<<<<< HEAD
+
 # SwiftDrop
-=======
-<div align="center">
-  <img src="https://img.icons8.com/?size=100&id=t2wJvVn4mN4R&format=png&color=000000" alt="SwiftDrop Logo" width="100"/>
-  <h1>SwiftDrop</h1>
-  <p><b>Your premium Windows alternative to Dropzone 5</b></p>
-  <p>A beautiful, glassmorphic desktop utility that streamlines your daily file operations.</p>
-</div>
 
 ---
 
@@ -65,4 +58,3 @@ Feel free to check the [issues page](https://github.com/MohammadMohid03/SwiftDro
 <div align="center">
   <i>Built with ❤️ for a calmer, desktop-first workspace.</i>
 </div>
->>>>>>> 8140721 (Initial commit of SwiftDrop)
