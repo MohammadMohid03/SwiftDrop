@@ -11,32 +11,46 @@ namespace SwiftDrop
 
         protected override void OnStartup(StartupEventArgs e)
         {
-            base.OnStartup(e);
+            AppDiagnostics.InitializeGlobalHandlers();
+            AppDiagnostics.RegisterDispatcherHandler(this);
 
-            // Keep app running even when all windows are "hidden"
-            ShutdownMode = ShutdownMode.OnExplicitShutdown;
-
-            var window = new MainWindow();
-            window.Show();
-
-            // Initialize system tray icon
-            _trayIconService = new TrayIconService(window);
-            window.TrayService = _trayIconService;
-
-            // Initialize global drag-to-top hook
-            _dragHookService = new GlobalDragHookService();
-            _dragHookService.DragToTopDetected += () =>
+            try
             {
-                Dispatcher.Invoke(() =>
-                {
-                    // Auto-show the panel when files are dragged to top-center
-                    window.ShowPanel();
-                    window.Activate();
-                });
-            };
-            _dragHookService.Start();
+                base.OnStartup(e);
 
-            window.DragHookService = _dragHookService;
+                // Keep app running even when all windows are "hidden"
+                ShutdownMode = ShutdownMode.OnExplicitShutdown;
+
+                var window = new MainWindow();
+                window.Show();
+                window.ShowPanel();
+                window.Activate();
+
+                // Initialize system tray icon
+                _trayIconService = new TrayIconService(window);
+                window.TrayService = _trayIconService;
+
+                // Initialize global drag-to-top hook
+                _dragHookService = new GlobalDragHookService();
+                _dragHookService.DragToTopDetected += () =>
+                {
+                    Dispatcher.Invoke(() =>
+                    {
+                        // Auto-show the panel when files are dragged to top-center
+                        window.ShowPanel();
+                        window.Activate();
+                    });
+                };
+                _dragHookService.Start();
+
+                window.DragHookService = _dragHookService;
+            }
+            catch (Exception ex)
+            {
+                AppDiagnostics.LogException("App.OnStartup", ex);
+                AppDiagnostics.ShowFatalError(ex);
+                Shutdown(-1);
+            }
         }
 
         protected override void OnExit(ExitEventArgs e)
