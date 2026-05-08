@@ -22,10 +22,31 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Build and Publish
-        run: dotnet publish SwiftDrop/SwiftDrop.csproj -c Release -r win-x64 --self-contained true -p:PublishSingleFile=true -o publish_output
+        run: dotnet publish SwiftDrop/SwiftDrop.csproj -c Release -r win-x64 --self-contained true /p:PublishSingleFile=true /p:EnableCompressionInSingleFile=true /p:PublishReadyToRun=false -o publish_output
+
+      - name: Verify Published App
+        shell: pwsh
+        run: |
+          if (!(Test-Path publish_output/SwiftDrop.exe)) {
+            throw "publish_output/SwiftDrop.exe was not created."
+          }
+
+          $file = Get-Item publish_output/SwiftDrop.exe
+          if ($file.Length -lt 50MB) {
+            throw "Published executable is unexpectedly small: $([math]::Round($file.Length / 1MB, 2)) MB"
+          }
+
+          Write-Host "Published SwiftDrop.exe size: $([math]::Round($file.Length / 1MB, 2)) MB"
 
       - name: Rename EXE
-        run: mv publish_output/SwiftDrop.exe publish_output/SwiftDrop-Windows.exe
+        shell: pwsh
+        run: Move-Item -Path publish_output/SwiftDrop.exe -Destination publish_output/SwiftDrop-Windows.exe -Force
+
+      - name: Remove Previous Release Asset
+        shell: pwsh
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh release delete-asset latest SwiftDrop-Windows.exe --yes --repo ${{ github.repository }} || exit 0
 
       - name: Create Continuous Release
         uses: softprops/action-gh-release@v2
