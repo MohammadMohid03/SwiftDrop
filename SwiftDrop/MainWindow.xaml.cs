@@ -17,7 +17,7 @@ namespace SwiftDrop
         public TrayIconService? TrayService { get; set; }
         public GlobalDragHookService? DragHookService { get; set; }
 
-        private bool _isPanelOpen = false;
+        private bool _isPanelOpen = true;
         private bool _isDragActive = false;
 
         public MainWindow()

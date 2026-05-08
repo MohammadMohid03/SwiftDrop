@@ -3,11 +3,12 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:views="clr-namespace:SwiftDrop.Views"
         Title="SwiftDrop"
+        Icon="Assets/SwiftDrop_Icon.png"
         WindowStyle="None"
         AllowsTransparency="True"
         Background="Transparent"
         Topmost="True"
-        ShowInTaskbar="False"
+        ShowInTaskbar="True"
         ResizeMode="NoResize"
         Width="880"
         SizeToContent="Height"
@@ -49,7 +50,7 @@
                                    VerticalAlignment="Center"
                                    RenderTransformOrigin="0.5,0.5">
                             <TextBlock.RenderTransform>
-                                <RotateTransform x:Name="ArrowRotation" Angle="0"/>
+                                <RotateTransform x:Name="ArrowRotation" Angle="180"/>
                             </TextBlock.RenderTransform>
                         </TextBlock>
                     </Grid>
@@ -57,13 +58,13 @@
             </Border>
 
             <Border x:Name="MainPanel"
-                    Visibility="Collapsed"
+                    Visibility="Visible"
                     Margin="10,0,10,16"
                     Height="560"
                     CornerRadius="0,0,28,28"
                     ClipToBounds="True"
                     RenderTransformOrigin="0.5,0"
-                    Opacity="0"
+                    Opacity="1"
                     Background="{StaticResource WindowBackgroundBrush}"
                     BorderBrush="#54FFFFFF"
                     BorderThickness="1">
@@ -72,7 +73,7 @@
                 </Border.CacheMode>
                 <Border.RenderTransform>
                     <TransformGroup>
-                        <ScaleTransform x:Name="PanelScale" ScaleX="0.985" ScaleY="0.985"/>
+                        <ScaleTransform x:Name="PanelScale" ScaleX="1" ScaleY="1"/>
                         <TranslateTransform x:Name="PanelTranslate" Y="0"/>
                     </TransformGroup>
                 </Border.RenderTransform>
