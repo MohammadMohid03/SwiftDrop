@@ -53,6 +53,7 @@ namespace SwiftDrop
 
         private async void MainWindow_Loaded(object sender, RoutedEventArgs e)
         {
+            DesktopShortcutService.EnsureShortcut();
             PositionAtTopCenter();
 
             // Initialize multi-grid system asynchronously
